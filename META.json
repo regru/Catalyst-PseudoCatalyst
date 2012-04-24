@@ -1,0 +1,52 @@
+{
+   "abstract" : "Simple testing of Catalyst controllers",
+   "author" : [
+      "unknown"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112621",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Catalyst-PseudoCatalyst",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.38"
+         }
+      }
+   },
+   "provides" : {
+      "Catalyst::PseudoCatalyst" : {
+         "file" : "lib/Catalyst/PseudoCatalyst.pm",
+         "version" : "0.04"
+      },
+      "Catalyst::PseudoCatalyst::Action" : {
+         "file" : "lib/Catalyst/PseudoCatalyst/Action.pm",
+         "version" : 0
+      },
+      "Catalyst::PseudoCatalyst::Request" : {
+         "file" : "lib/Catalyst/PseudoCatalyst/Request.pm",
+         "version" : 0
+      },
+      "Catalyst::PseudoCatalyst::Request::Upload" : {
+         "file" : "lib/Catalyst/PseudoCatalyst/Request/Upload.pm",
+         "version" : 0
+      },
+      "Catalyst::PseudoCatalyst::Response" : {
+         "file" : "lib/Catalyst/PseudoCatalyst/Response.pm",
+         "version" : 0
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.04"
+}

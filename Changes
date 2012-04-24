@@ -1,0 +1,9 @@
+Revision history for Perl extension Catalyst::PseudoCatalyst.
+
+0.02	2009-Sep-29	Walery Studennikov
+	- "great renaming". All modules are renamed more naturally.
+0.03	2010-Apr-01	Chuvashev Anton
+	- add PseudoCatalyst/Action.pm, Modify MANIFEST
+        - добавил возможность устанавливать адрес и путь запроса
+0.04	2011-Dec-15	Walery Studennikov
+	- new method 'error'

@@ -1,0 +1,105 @@
+Низкоуровневое тестирование Catalyst-контроллеров.
+----
+HEADER::Низкоуровневое тестирование контроллеров
+Тестируем конкретный action
+----
+(параметры из HTTP-запроса, сессия?, stash?)
+⇒
+(stash, сессия?)
+----
+/show_post?id=123
+[[PRE:
+p => { id => 123 },
+s => { user_id => 456 },
+:PRE]]
+⇒
+[[PRE:
+r => { post_data => { ... } },
+s => { user_id => 456 },
+:PRE]]
+----
+Вызываем action как обычную функцию:
+[[PRE:
+my ($r, $s) = ({}, { user_id => 456 });
+
+is(
+    MyApp::C::Root::show_post(
+      {
+	p => { id => 123 },
+	r => $r,
+	s => $s,
+      },
+    ),
+    1,
+    'MyApp::C::Root::show_post'
+);
+:PRE]]
+----
+[[PRE:
+cmp_deeply(
+    $r,
+    { post_data => { ... } },
+    'show_post?id=123 stash'
+);
+:PRE]]
+----
+[[PRE:
+cmp_deeply(
+    $s,
+    { user_id => 456 },
+    'show_post?id=123 session'
+);
+:PRE]]
+----
+Как это возможно???
+[Всё дело в волшебных пузырьках...]
+----
+Как это работает...
+[[PRE:
+sub show_post : Local {
+    my ($self, $c, $s, $r, $p) = getcontvars @_;
+
+    $r->{post_data} = ...
+}
+:PRE]]
+----
+[[PRE:
+sub getcontvars(@) {
+    my ($self, $c) = (shift, shift);
+
+    my ($p, $r, $s);
+
+    if (ref $self eq 'HASH') {
+	# Тестовый режим
+    }
+    else {
+	# Боевой режим
+    }
+
+    return ($self, $c, $s, $r, $p, @_);
+}
+:PRE]]
+----
+Боевой режим:
+[[PRE:
+$p = $c->request->params;
+$r = $c->stash;
+$s = $c->session;
+:PRE]]
+----
+Тестовый режим:
+[[PRE:
+($p, $r, $s) = ($self->{p}, $self->{r}, $self->{s});
+
+require_once 'Catalyst::PseudoCatalyst';
+$c = new Catalyst::PseudoCatalyst( $self );
+:PRE]]
+----
+[[PRE:
+Catalyst::PseudoCatalyst
+Catalyst::PseudoAction
+Catalyst::PseudoRequest
+req => { method => 'POST', }
+:PRE]]
+пока всё сырое,
+но можно улучшать...
