@@ -101,7 +101,7 @@ sub forward {
     print "# [forward => $action$args]\n" if $DEBUG;
 
     if ($action =~ tr|/.|/.|) {
-	warn "# Complex forwards are not supported." if $DEBUG;
+        warn "# Complex forwards are not supported." if $DEBUG;
     }
 
     my @args = get_caller_args(1);
